@@ -6,7 +6,7 @@ import AcUnitIcon from "@material-ui/icons/AcUnit";
 function HeaderRight() {
   return (
     <>
-      <HeaderRightDiv>
+      <HeaderRightNav>
         <HeaderRightOption Icon={AcUnitIcon} title={"testIcon1"} />
         <HeaderRightOption Icon={AcUnitIcon} title={"testIcon2"} />
         <HeaderRightOption Icon={AcUnitIcon} title={"testIcon3"} />
@@ -18,17 +18,15 @@ function HeaderRight() {
           }
           title={"testuser"}
         />
-      </HeaderRightDiv>
+      </HeaderRightNav>
     </>
   );
 }
 
-const HeaderRightDiv = styled.div`
+const HeaderRightNav = styled.nav`
   display: flex;
   align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 999;
+  justify-content: center;
 `;
 
 export default HeaderRight;

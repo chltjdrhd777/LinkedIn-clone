@@ -16,8 +16,14 @@ const HeaderCont = styled.header`
   display: flex;
   justify-content: space-evenly;
   border-bottom: 0.01rem solid lightgray;
-  padding: 0.7rem 0;
+  padding: 0.5rem 0;
   width: 100%;
+  height: 50px;
+  background-color: white;
+
+  position: sticky;
+  top: 0;
+  z-index: 999;
 `;
 
 export default Header;

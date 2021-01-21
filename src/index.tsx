@@ -12,6 +12,10 @@ const GlobalCSS = createGlobalStyle`
   html {
     font-size:20px;
   }
+
+  h2{
+    font-size: 30px;
+  }
 `;
 
 ReactDOM.render(
