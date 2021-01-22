@@ -2,8 +2,12 @@ import React from "react";
 import styled from "styled-components/macro";
 import HeaderRightOption from "./HeaderRightOption";
 import AcUnitIcon from "@material-ui/icons/AcUnit";
+import { useSelector } from "react-redux";
+import { selectUser } from "redux/mainReducer";
 
 function HeaderRight() {
+  const user = useSelector(selectUser);
+
   return (
     <>
       <HeaderRightNav>
@@ -13,9 +17,7 @@ function HeaderRight() {
         <HeaderRightOption Icon={AcUnitIcon} title={"testIcon4"} />
         <HeaderRightOption Icon={AcUnitIcon} title={"testIcon5"} />
         <HeaderRightOption
-          avatar={
-            "https://hullandhull.com/wp-content/uploads/2020/06/smiley-10994882.jpg"
-          }
+          avatar={user.userInfo?.photoURL}
           title={"testuser"}
         />
       </HeaderRightNav>

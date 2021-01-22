@@ -5,15 +5,27 @@ import HeadsetIcon from "@material-ui/icons/Headset";
 import HourglassFullIcon from "@material-ui/icons/HourglassFull";
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
 import AndroidIcon from "@material-ui/icons/Android";
+import { SvgIconTypeMap } from "@material-ui/core";
+import { OverridableComponent } from "@material-ui/core/OverridableComponent";
 
-function FeedInputOptions() {
-  const iconDataSets = [
+type Props = {
+  Icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
+  title: string;
+  color: string;
+}[];
+
+function FeedInputOptions(iconData?: Props) {
+  let iconDataSets = [
     { Icon: CreateNewFolderIcon, title: "testIcon1", color: "#99f899" },
     { Icon: HeadsetIcon, title: "testIcon2", color: "#99caf8" },
     { Icon: HourglassFullIcon, title: "testIcon3", color: "#f8df99" },
     { Icon: PhotoLibraryIcon, title: "testIcon4", color: "#f89c99" },
     { Icon: AndroidIcon, title: "testIcon5", color: "#99aff8" },
   ];
+
+  if (iconData) {
+    iconDataSets = iconData;
+  }
 
   return (
     <FeedOptionsDiv>

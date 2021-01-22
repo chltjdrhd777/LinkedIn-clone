@@ -1,8 +1,12 @@
 import { Avatar } from "@material-ui/core";
 import React from "react";
 import styled from "styled-components/macro";
+import { useSelector } from "react-redux";
+import { selectUser } from "redux/mainReducer";
 
-function SidebarMain() {
+function SidebarSection() {
+  const user = useSelector(selectUser);
+
   const rectenItem = (topic: string) => {
     return (
       <div className="sidebar_recentItem">
@@ -13,43 +17,50 @@ function SidebarMain() {
   };
 
   return (
-    <SideBarsection>
-      <article className="sidebar_top">
-        <img
-          src="https://res.cloudinary.com/rebelwalls/image/upload/b_black,c_fill,f_auto,fl_progressive,h_533,q_auto,w_800/v1428564288/article/R10141_image1"
-          alt=""
-        />
-        <Avatar className="sidebar_avatar" src="" />
-        <h3>test user</h3>
-        <h5>abcd@ngw.se</h5>
-      </article>
-
-      <article className="sidebar_stats">
-        <div className="sidebar_stat">
-          <p>Who viewd you</p>
-          <p className="sidebar_statNumber">121212121</p>
+    <SideBar>
+      <div className="position_sticky">
+        <div className="sidebar_top">
+          <img
+            src="https://res.cloudinary.com/rebelwalls/image/upload/b_black,c_fill,f_auto,fl_progressive,h_533,q_auto,w_800/v1428564288/article/R10141_image1"
+            alt=""
+          />
+          <Avatar className="sidebar_avatar" src={user.userInfo?.photoURL} />
+          <h3>test user</h3>
+          <h5>abcd@ngw.se</h5>
         </div>
-        <div className="sidebar_stat">
-          <p>views on post</p>
-          <p className="sidebar_statNumber">12155512</p>
-        </div>
-      </article>
 
-      <article className="sidebar_buttons">
-        <p>Recent</p>
-        {rectenItem("testmenue1")}
-        {rectenItem("testmenue2")}
-        {rectenItem("testmenue3")}
-        {rectenItem("testmenue4")}
-        {rectenItem("testmenue5")}
-      </article>
-    </SideBarsection>
+        <div className="sidebar_stats">
+          <div className="sidebar_stat">
+            <p>Who viewd you</p>
+            <p className="sidebar_statNumber">121212121</p>
+          </div>
+          <div className="sidebar_stat">
+            <p>views on post</p>
+            <p className="sidebar_statNumber">12155512</p>
+          </div>
+        </div>
+
+        <div className="sidebar_buttons">
+          <p>Recent</p>
+          {rectenItem("testmenue1")}
+          {rectenItem("testmenue2")}
+          {rectenItem("testmenue3")}
+          {rectenItem("testmenue4")}
+          {rectenItem("testmenue5")}
+        </div>
+      </div>
+    </SideBar>
   );
 }
 
-const SideBarsection = styled.section`
+const SideBar = styled.section`
   flex: 0.2;
   text-align: center;
+
+  & .position_sticky {
+    position: sticky;
+    top: 71px;
+  }
 
   & .sidebar_top {
     display: flex;
@@ -140,4 +151,4 @@ const SideBarsection = styled.section`
   }
 `;
 
-export default SidebarMain;
+export default SidebarSection;

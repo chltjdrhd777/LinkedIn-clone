@@ -1,34 +1,74 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components/macro";
 import CreateIcon from "@material-ui/icons/Create";
 import FeedInputOptions from "./FeedInputOptions";
-import $ from "jquery";
+import db from "../../firebase";
+import { useDispatch } from "react-redux";
+import { petchPost } from "redux/userSlices";
+import firebase from "firebase/app";
 
 function FeedSection() {
+  const [focused, setFocused] = useState("unfocused_state");
+  const [input, setInput] = useState("");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    db.collection("posts").onSnapshot((snap) => {
+      dispatch(
+        petchPost(
+          snap.docs.map((doc) => {
+            return { id: doc.id, data: doc.data() };
+          })
+        )
+      );
+    });
+  }, [dispatch]);
+
+  const sendPost = (e?: any) => {
+    e.preventDefault();
+    db.collection("posts").add({
+      name: "test1",
+      description: "whwhwhw",
+      message: input,
+      photoURL: "",
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+
+    setInput("");
+  };
+
   return (
     <Feed>
-      <article className="feed_inputCont">
+      <div className="feed_inputCont">
         <div className="feed_input">
-          <CreateIcon />
-          <form>
+          <CreateIcon className={focused} />
+
+          <form onSubmit={sendPost}>
             <input
               type="text"
               placeholder="typing what you want"
               className="inputFocus_check"
+              onFocus={(e: any) => {
+                setFocused("focused_state");
+              }}
+              onBlur={(e: any) => {
+                setFocused("unfocused_state");
+              }}
+              value={input}
+              onChange={(e: any) => setInput(e.target.value)}
             />
             <button type="submit">Send</button>
           </form>
         </div>
 
         {FeedInputOptions()}
-      </article>
+      </div>
     </Feed>
   );
 }
 
 const Feed = styled.section`
   flex: 0.6;
-  margin: 0 1rem;
 
   & .feed_inputCont {
     display: flex;
@@ -46,6 +86,9 @@ const Feed = styled.section`
       color: gray;
       & svg {
         margin-right: 10px;
+      }
+      & .focused_state {
+        visibility: hidden;
       }
 
       & form {
