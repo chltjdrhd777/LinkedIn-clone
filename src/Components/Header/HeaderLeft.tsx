@@ -10,7 +10,7 @@ function HeaderLeft() {
         <img src={logoImg} alt="Linkedin logo" />
         <form className="search_bar">
           <SearchIcon />
-          <input type="text" />
+          <input type="text" placeholder="Search" />
         </form>
       </HeaderLeftDiv>
     </>

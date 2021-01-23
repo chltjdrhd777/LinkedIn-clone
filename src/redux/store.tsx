@@ -4,7 +4,12 @@ import ReduxThunk from "redux-thunk";
 
 const middleware = [ReduxThunk];
 
-export const createStore = () => {
+export default configureStore({
+  reducer: mainReducer,
+  middleware,
+});
+
+/* export const createStore = () => {
   const store = configureStore({
     reducer: mainReducer,
     middleware,
@@ -12,3 +17,4 @@ export const createStore = () => {
 
   return store;
 };
+ */

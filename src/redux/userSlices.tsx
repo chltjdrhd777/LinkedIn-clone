@@ -23,16 +23,20 @@ export interface UserState {
 const user = createSlice({
   name: "user",
   initialState: {
-    userInfo: {
+    userInfo: /* {
       photoURL:
         "https://hullandhull.com/wp-content/uploads/2020/06/smiley-10994882.jpg",
-    },
+    } */ undefined,
     postInfo: [],
   } as UserState,
   reducers: {
     login: (state, action: PayloadAction<UserInfo>) => {
       state.userInfo = action.payload;
     },
+    logout: (state) => {
+      state.userInfo = undefined;
+    },
+
     petchPost: (state, action) => {
       state.postInfo = action.payload;
     },
@@ -41,4 +45,4 @@ const user = createSlice({
 
 export default user;
 
-export const { login, petchPost } = user.actions;
+export const { login, logout, petchPost } = user.actions;

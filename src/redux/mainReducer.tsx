@@ -4,6 +4,6 @@ export const mainReducer = {
   user: user.reducer,
 };
 
-export const selectUser = (state: { user: UserState }) => {
-  return state.user;
+export const selectUser = (everyState: { user: UserState }) => {
+  return everyState.user;
 };

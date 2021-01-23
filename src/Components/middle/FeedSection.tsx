@@ -13,15 +13,17 @@ function FeedSection() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    db.collection("posts").onSnapshot((snap) => {
-      dispatch(
-        petchPost(
-          snap.docs.map((doc) => {
-            return { id: doc.id, data: doc.data() };
-          })
-        )
-      );
-    });
+    db.collection("posts")
+      .orderBy("timestamp", "desc")
+      .onSnapshot((snap) => {
+        dispatch(
+          petchPost(
+            snap.docs.map((doc) => {
+              return { id: doc.id, data: doc.data() };
+            })
+          )
+        );
+      });
   }, [dispatch]);
 
   const sendPost = (e?: any) => {
