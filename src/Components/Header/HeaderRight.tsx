@@ -16,10 +16,12 @@ function HeaderRight() {
         <HeaderRightOption Icon={AcUnitIcon} title={"testIcon3"} />
         <HeaderRightOption Icon={AcUnitIcon} title={"testIcon4"} />
         <HeaderRightOption Icon={AcUnitIcon} title={"testIcon5"} />
-        <HeaderRightOption
-          avatar={user.userInfo?.photoURL}
-          title={"testuser"}
-        />
+        {user.userInfo && (
+          <HeaderRightOption
+            avatar={user.userInfo?.photoURL}
+            title={user.userInfo.displayName}
+          />
+        )}
       </HeaderRightNav>
     </>
   );

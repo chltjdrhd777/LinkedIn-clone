@@ -1,6 +1,8 @@
 import { SvgIconTypeMap, Avatar } from "@material-ui/core";
 import { OverridableComponent } from "@material-ui/core/OverridableComponent";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { logout } from "redux/userSlices";
 import styled from "styled-components/macro";
 
 export interface Props {
@@ -10,8 +12,13 @@ export interface Props {
 }
 
 function HeaderRightOption({ avatar, Icon, title }: Props) {
+  const dispatch = useDispatch();
+  const logOutFunc = () => {
+    dispatch(logout());
+  };
+
   return (
-    <HeaderRightOPtionDiv>
+    <HeaderRightOPtionDiv onClick={logOutFunc}>
       <div className="icon_container">
         {Icon && <Icon className="headerOption_Icon" />}
         {avatar && <Avatar className="headerAvatar" src={avatar} />}

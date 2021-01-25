@@ -6,11 +6,14 @@ import db from "../../firebase";
 import { useDispatch } from "react-redux";
 import { petchPost } from "redux/userSlices";
 import firebase from "firebase/app";
+import { selectUser } from "redux/mainReducer";
+import { useSelector } from "react-redux";
 
 function FeedSection() {
   const [focused, setFocused] = useState("unfocused_state");
   const [input, setInput] = useState("");
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     db.collection("posts")
@@ -29,10 +32,10 @@ function FeedSection() {
   const sendPost = (e?: any) => {
     e.preventDefault();
     db.collection("posts").add({
-      name: "test1",
-      description: "whwhwhw",
+      name: user.userInfo.displayName,
+      description: user.userInfo.displayName,
       message: input,
-      photoURL: "",
+      photoURL: user.userInfo.photoURL,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
 

@@ -25,8 +25,8 @@ function SidebarSection() {
             alt=""
           />
           <Avatar className="sidebar_avatar" src={user.userInfo?.photoURL} />
-          <h3>test user</h3>
-          <h5>abcd@ngw.se</h5>
+          <h3>{user.userInfo.displayName}</h3>
+          <h5>{user.userInfo.email}</h5>
         </div>
 
         <div className="sidebar_stats">

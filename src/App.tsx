@@ -1,15 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "./Components/Header/Header";
 import SidebarSection from "./Components/Sidebar/SidebarSection";
 import styled from "styled-components/macro";
 import FeedSection from "./Components/middle/FeedSection";
 import PostSection from "Components/middle/PostSection";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "redux/mainReducer";
 import LogIn from "routes/LogIn";
+import { auth } from "./firebase";
+import { login, logout } from "redux/userSlices";
 
 function App() {
   const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    auth.onAuthStateChanged((userAuth) => {
+      if (userAuth) {
+        dispatch(
+          login({
+            email: userAuth!.email,
+            uid: userAuth!.uid,
+            displayName: userAuth!.displayName,
+            photoURL: userAuth!.photoURL,
+          })
+        );
+      } else {
+        dispatch(logout());
+      }
+    });
+  }, []);
 
   return (
     <div
@@ -17,7 +37,6 @@ function App() {
       style={{
         background: "#f3f2ef",
         width: "100%",
-        height: "100%",
       }}
     >
       <Header />

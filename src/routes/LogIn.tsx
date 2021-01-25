@@ -1,17 +1,55 @@
+import { auth } from "../firebase";
 import React from "react";
 import { useState } from "react";
 import styled from "styled-components/macro";
 import LoginLogo from "../img/loginImg.png";
+import { useDispatch } from "react-redux";
+import { login } from "redux/userSlices";
 
 function LogIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [profilePic, setProfilePic] = useState("");
+  const dispatch = useDispatch();
+  const userDataForm = (userAuth: any) => {
+    return {
+      email: userAuth!.user.email,
+      uid: userAuth!.user?.uid,
+      displayName: userAuth!.user.displayName,
+      photoURL: userAuth!.user.photoURL,
+    };
+  };
 
-  const registerFunc = () => {};
+  const registerFunc = () => {
+    if (!name) {
+      return alert("Please enter your full name");
+    }
+
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((userAuth) => {
+        userAuth.user
+          ?.updateProfile({
+            displayName: name,
+            photoURL: profilePic,
+          })
+          .then(() => {
+            dispatch(login(userDataForm(userAuth)));
+          });
+      })
+      .catch((err) => alert(err));
+  };
+
   const loginFunc = (e?: any) => {
     e.preventDefault();
+
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((userAuth) => {
+        dispatch(login(userDataForm(userAuth)));
+      })
+      .catch((err) => alert(err));
   };
 
   return (
@@ -23,20 +61,30 @@ function LogIn() {
           type="text"
           placeholder="Full Name"
           value={name}
+          required
           onChange={(e: any) => {
             setName(e.target.value);
           }}
         />
+
+        <label className="input-file-bar" htmlFor="input-file">
+          {profilePic ? profilePic : "file choose"}
+        </label>
         <input
-          type="text"
+          type="file"
+          accept="image/*,text"
+          multiple
           placeholder="Profile pic(optional)"
-          value={profilePic}
-          onChange={(e: any) => setProfilePic(e.target.value)}
+          onChange={(e: any) => setProfilePic(e.target.files[0].name)}
+          id="input-file"
+          style={{ display: "none" }}
         />
+
         <input
           type="text"
           placeholder="Email"
           value={email}
+          required
           onChange={(e: any) => {
             setEmail(e.target.value);
           }}
@@ -45,6 +93,7 @@ function LogIn() {
           type="text"
           placeholder="Password"
           value={password}
+          required
           onChange={(e: any) => {
             setPassword(e.target.value);
           }}
@@ -80,6 +129,18 @@ const LogInMain = styled.main`
   & form {
     display: flex;
     flex-direction: column;
+    & .input-file-bar {
+      display: flex;
+      align-items: center;
+      color: gray;
+      width: 15rem;
+      height: 2rem;
+      font-size: 0.8rem;
+      padding-left: 10px;
+      margin-bottom: 5px;
+      border-radius: 5px;
+      border: 2px solid black;
+    }
 
     & input {
       width: 15rem;

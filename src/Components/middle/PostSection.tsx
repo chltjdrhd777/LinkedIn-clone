@@ -15,6 +15,7 @@ interface Props3 {
 
 function PostSection({ name, description, message, photoURL }: Props3) {
   const posts = useSelector(selectUser).postInfo;
+  const user = useSelector(selectUser).userInfo;
 
   return (
     <>
@@ -24,7 +25,7 @@ function PostSection({ name, description, message, photoURL }: Props3) {
         return (
           <Post key={post.id}>
             <div className="post_header">
-              <Avatar />
+              <Avatar>{user.displayName[0]}</Avatar>
               <div className="post_info">
                 <h2>{data.name}</h2>
                 <p>{data.description}</p>

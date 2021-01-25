@@ -28,7 +28,7 @@ const GlobalCSS = createGlobalStyle`
   }
 
   #root{
-    height: 100%;
+    height: 100vh;
   }
 `;
 
